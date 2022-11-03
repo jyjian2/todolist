@@ -5,6 +5,8 @@ const app = express();
 
 app.set("view engine", "ejs");
 
+app.use(bodyParser.urlencoded({extension:true}));
+
 app.get("/", function(req, res) {
   const today = new Date();
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric"};
@@ -16,6 +18,10 @@ app.get("/", function(req, res) {
 
 });
 
+app.post("/", function(req, res) {
+  var newItem = req.body.newItem;
+  console.log(newItem);
+})
 app.listen(3000, function() {
   console.log("all good");
 });

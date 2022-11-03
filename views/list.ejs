@@ -5,6 +5,14 @@
     <title></title>
   </head>
   <body>
-    <h1>Today is <%= passDay %></h1>
+    <h1><%= passDay %></h1>
+    <ul>
+      <li>Quick walk</li>
+      <li>Clean the house</li>
+    </ul>
+    <form action = "/" method="post" >
+      <input type="text" name="newItem">
+      <button type="submit" name="button">Add</button>
+    </form>
   </body>
 </html>
