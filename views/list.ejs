@@ -7,8 +7,9 @@
   <body>
     <h1><%= passDay %></h1>
     <ul>
-      <li>Quick walk</li>
-      <li>Clean the house</li>
+    <% for(var i = 0; i < userAddItems.length; i++) { %>
+       <li><%=userAddItems[i]%></li>
+    <% } %>
     </ul>
     <form action = "/" method="post" >
       <input type="text" name="newItem">
