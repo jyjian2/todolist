@@ -9,6 +9,7 @@ var newItem = "";
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({extension:true}));
+app.use(express.static("public"));
 
 app.get("/", function(req, res) {
   const today = new Date();
