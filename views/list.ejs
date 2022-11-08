@@ -6,15 +6,23 @@
     <<link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
-    <h1><%= passDay %></h1>
-    <ul>
-    <% for(var i = 0; i < userAddItems.length; i++) { %>
-       <li><%=userAddItems[i]%></li>
-    <% } %>
-    </ul>
-    <form action = "/" method="post" >
-      <input type="text" name="newItem">
-      <button type="submit" name="button">Add</button>
-    </form>
+    <div class="box" id="heading">
+      <h1><%= passDay %></h1>
+    </div>
+
+    <div class="box">
+      <% for(var i = 0; i < userAddItems.length; i++) { %>
+      <div class="item">
+        <input type="checkbox">
+           <p><%=userAddItems[i]%></p>
+      </div>
+      <% } %>
+      <form class="item" action = "/" method="post" >
+        <input type="text" name="newItem" placeholder="New Ttem" autocomplete="off">
+        <button type="submit" name="button">+</button>
+      </form>
+    </div>
+
+
   </body>
 </html>
