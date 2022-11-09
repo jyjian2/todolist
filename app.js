@@ -3,8 +3,9 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-var items = ["Clean house", "Web course", "Leetcode"];
-var newItem = "";
+let items = ["Clean house", "Web course", "Leetcode"];
+let newItem = "";
+let workItems = [];
 
 app.set("view engine", "ejs");
 
@@ -14,17 +15,28 @@ app.use(express.static("public"));
 app.get("/", function(req, res) {
   const today = new Date();
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric"};
-  var dayValue = today.toLocaleDateString("en-US", options);
+  let dayValue = today.toLocaleDateString("en-US", options);
 
-  res.render("list", {passDay:dayValue, userAddItems: items})
+  res.render("list", {listTitle:dayValue, userAddItems: items})
 
 });
 
 app.post("/", function(req, res) {
   newItem = req.body.newItem;
-  items.push(newItem);
-  res.redirect("/");
+  if (req.body.button === "Work") {
+    workItems.push(newItem);
+    res.redirect("/Work");
+  } else {
+    items.push(newItem);
+    res.redirect("/");
+  }
 })
+
+app.get("/work", function(req, res) {
+  res.render("list", {listTitle: "Work", userAddItems: workItems});
+})
+
+
 app.listen(3000, function() {
   console.log("all good");
 });
