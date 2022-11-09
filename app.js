@@ -36,6 +36,9 @@ app.get("/work", function(req, res) {
   res.render("list", {listTitle: "Work", userAddItems: workItems});
 })
 
+app.get("/About", function(req, res){
+  res.render("about");
+})
 
 app.listen(3000, function() {
   console.log("all good");
