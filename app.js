@@ -16,6 +16,12 @@ app.use(express.static("public"));
 
 mongoose.connect("mongodb://120.0.0.7:27017/todolistDB");
 
+const itemSchema = {
+  name: String
+};
+
+const Item = mongoose.model("Item", itemSchema);
+
 app.get("/", function(req, res) {
   let dayValue = date.getDay();
   res.render("list", {listTitle:dayValue, userAddItems: items})
