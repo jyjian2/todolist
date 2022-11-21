@@ -46,23 +46,24 @@ app.get("/", function(req, res) {
           console.log("Save default items to DB");
         }
       });
+      res.redirect("/");
     } else {
       res.render("list", {listTitle:"Today", userAddItems: foundItems})
     }
-    
+
   })
 
 });
 
 app.post("/", function(req, res) {
   newItem = req.body.newItem;
-  if (req.body.button === "Work") {
-    workItems.push(newItem);
-    res.redirect("/Work");
-  } else {
-    items.push(newItem);
-    res.redirect("/");
-  }
+
+  const userAddItem = new Item({
+    name: newItem
+  });
+  userAddItem.save();
+
+  res.redirect("/");
 })
 
 app.get("/work", function(req, res) {
