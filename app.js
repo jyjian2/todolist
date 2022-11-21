@@ -42,10 +42,17 @@ Item.insertMany(defaultItems, function(err){
   }
 });
 
+
 app.get("/", function(req, res) {
 
-  res.render("list", {listTitle:"Today", userAddItems: items})
-
+  Item.find(function(err, foundItems) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("list", {listTitle:"Today", userAddItems: foundItems})
+    }
+  })
+  
 });
 
 app.post("/", function(req, res) {
