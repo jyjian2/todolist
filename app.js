@@ -23,8 +23,8 @@ const itemSchema = {
 const Item = mongoose.model("Item", itemSchema);
 
 app.get("/", function(req, res) {
-  let dayValue = date.getDay();
-  res.render("list", {listTitle:dayValue, userAddItems: items})
+
+  res.render("list", {listTitle:"Today", userAddItems: items})
 
 });
 
