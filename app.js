@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js");
+const mongoose = require("mongoose");
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({extension:true}));
 app.use(express.static("public"));
+
+mongoose.connect("mongodb://120.0.0.7:27017/todolistDB");
 
 app.get("/", function(req, res) {
   let dayValue = date.getDay();
