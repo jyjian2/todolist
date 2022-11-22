@@ -48,7 +48,7 @@ app.get("/", function(req, res) {
       });
       res.redirect("/");
     } else {
-      res.render("list", {listTitle:"Today", userAddItems: foundItems})
+      res.render("list", {listTitle:"Today", newListItems: foundItems})
     }
 
   })
@@ -66,8 +66,12 @@ app.post("/", function(req, res) {
   res.redirect("/");
 })
 
+app.post("/delete", function(req, res){
+  console.log(req.body.checkbox);
+})
+
 app.get("/work", function(req, res) {
-  res.render("list", {listTitle: "Work", userAddItems: workItems});
+  res.render("list", {listTitle: "Work", newListItems: workItems});
 })
 
 app.get("/About", function(req, res){
