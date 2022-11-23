@@ -34,6 +34,14 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
+const listSchema = {
+  name: String,
+  // the item document is associate with list document
+  items: [itemSchema]
+};
+
+const List = mongoose.model("List", listSchema);
+
 app.get("/", function(req, res) {
 
   Item.find(function(err, foundItems) {
@@ -55,6 +63,33 @@ app.get("/", function(req, res) {
 
 });
 
+// custom route
+app.get("/:customListName", function(req, res){
+  const customListName = req.params.customListName;
+
+  List.findOne({name: customListName}, function(err, foundList){
+    console.log(err, foundList);
+    if (err) {
+      console.log(err);
+    } else {
+      if (!foundList) {
+        // create a list document named by customListName
+        const list = new List({
+          name: customListName,
+          items: defaultItems
+        });
+        list.save();
+        res.redirect("/" + customListName);
+      } else {
+        res.render("list", {listTitle:foundList.name, newListItems:foundList.items})
+      }
+    }
+  })
+
+
+
+})
+
 app.post("/", function(req, res) {
   newItem = req.body.newItem;
 
@@ -68,6 +103,15 @@ app.post("/", function(req, res) {
 
 app.post("/delete", function(req, res){
   console.log(req.body.checkbox);
+  const checkedItemId = req.body.checkbox;
+  Item.deleteOne({_id: checkedItemId}, function(err, res){
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(res);
+    }
+  });
+  res.redirect("/");
 })
 
 app.get("/work", function(req, res) {
