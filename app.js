@@ -85,21 +85,32 @@ app.get("/:customListName", function(req, res){
       }
     }
   })
-
-
-
 })
 
 app.post("/", function(req, res) {
   newItem = req.body.newItem;
+  const listName = req.body.list;
 
   const userAddItem = new Item({
     name: newItem
   });
-  userAddItem.save();
 
-  res.redirect("/");
-})
+  if (listName === "Today") {
+    userAddItem.save();
+    res.redirect("/");
+  } else {
+    List.findOne({name: listName}, function(err, foundList){
+      console.log(foundList);
+      if (err) {
+        console.log(err);
+      } else {
+        foundList.items.push(userAddItem);
+        foundList.save();
+        res.redirect("/" + listName);
+      }
+    });
+  }
+});
 
 app.post("/delete", function(req, res){
   console.log(req.body.checkbox);
