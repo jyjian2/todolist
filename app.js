@@ -113,17 +113,26 @@ app.post("/", function(req, res) {
 });
 
 app.post("/delete", function(req, res){
-  console.log(req.body.checkbox);
   const checkedItemId = req.body.checkbox;
-  Item.deleteOne({_id: checkedItemId}, function(err, res){
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(res);
-    }
-  });
-  res.redirect("/");
-})
+  const listName = req.body.listName;
+
+  if (listName === "Today") {
+    Item.deleteOne({_id: checkedItemId}, function(err, res){
+      if (err) {
+        console.log(err);
+      }
+    });
+    res.redirect("/");
+  } else {
+    List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedItemId}}}, function(err, foundList){
+      if (err) {
+        console.log(err);
+      } else {
+        res.redirect("/" + listName);
+      }
+    })
+  }
+});
 
 app.get("/work", function(req, res) {
   res.render("list", {listTitle: "Work", newListItems: workItems});
